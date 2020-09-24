@@ -7,7 +7,7 @@ import Employee from "./employee";
 import Setting from "./setting";
 
 import "antd/dist/antd.css";
-import "./App.css";
+import "./App.scss";
 
 const { Header, Content, Footer } = Layout;
 
