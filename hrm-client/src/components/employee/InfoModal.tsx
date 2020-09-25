@@ -1,0 +1,120 @@
+import React, { useState } from "react";
+import { Modal, Form, Input, Select, DatePicker } from "antd";
+import { FormProps } from "antd/lib/form";
+import moment from "moment";
+
+import {
+  EmployeeInfo,
+  CreateRequest,
+  UpdateRequest,
+} from "../../interface/employee";
+
+const { Option } = Select;
+
+interface Props extends FormProps {
+  visible: boolean;
+  edit: boolean;
+  rowData: Partial<EmployeeInfo>;
+  hide(): void;
+  createData(param: CreateRequest, callback: () => void): void;
+  updateData(param: UpdateRequest, callback: () => void): void;
+}
+
+const WrapInfoModal = (props: Props) => {
+  const [form] = Form.useForm();
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const handleOk = () => {
+    form.validateFields().then(() => {
+      setConfirmLoading(true);
+
+      let param = form.getFieldsValue();
+      param.hiredate = param.hiredate.format("YYYY-MM-DD");
+
+      if (!props.edit) {
+        props.createData(param as CreateRequest, close);
+      } else {
+        param.id = props.rowData.id;
+        props.updateData(param as UpdateRequest, close);
+      }
+    });
+  };
+
+  const handleCancel = () => {
+    close();
+  };
+
+  const close = () => {
+    props.hide();
+    setConfirmLoading(false);
+  };
+
+  let title = props.edit ? "編集" : "新しい社員を作成";
+  let { name, departmentId, hiredate, levelId } = props.rowData;
+
+  return (
+    <Modal
+      title={title}
+      visible={props.visible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      confirmLoading={confirmLoading}
+      destroyOnClose={true}
+    >
+      <Form>
+        <Form.Item
+          name="name"
+          initialValue={name}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              message: "氏名を入力してください",
+            },
+          ]}
+        >
+          <Input
+            placeholder="氏名"
+            style={{ width: 200 }}
+            maxLength={20}
+            allowClear
+          />
+        </Form.Item>
+        <Form.Item
+          name="departmentId"
+          initialValue={departmentId}
+          rules={[{ required: true, message: "所属課を選択してください" }]}
+        >
+          <Select placeholder="所属課" style={{ width: 200 }} allowClear>
+            <Option value={1}>技術部</Option>
+            <Option value={2}>サポート事業部</Option>
+            <Option value={3}>HRソリューション</Option>
+            <Option value={4}>総務部</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="hiredate"
+          initialValue={hiredate ? moment(hiredate) : undefined}
+          rules={[{ required: true, message: "入社時間を選択してください" }]}
+        >
+          <DatePicker placeholder="入社時間" style={{ width: 200 }} />
+        </Form.Item>
+        <Form.Item
+          name="levelId"
+          initialValue={levelId}
+          rules={[{ required: true, message: "levelを選択してください" }]}
+        >
+          <Select placeholder="level" style={{ width: 200 }} allowClear>
+            <Option value={1}>1</Option>
+            <Option value={2}>2</Option>
+            <Option value={3}>3</Option>
+            <Option value={4}>4</Option>
+            <Option value={5}>5</Option>
+          </Select>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default WrapInfoModal;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
-import { FormItemProps } from "antd/lib/form";
+import { FormProps } from "antd/lib/form";
 
 import { get } from "../../utils/request";
 import { GET_EMPLOYEE_URL } from "../../constants/urls";
@@ -8,8 +8,10 @@ import { EmployeeRequest, EmployeeResponse } from "../../interface/employee";
 
 const { Option } = Select;
 
-interface Props extends FormItemProps {
+interface Props extends FormProps {
   onDataChange(data: EmployeeResponse): void;
+  getData(param: EmployeeRequest, callback: () => void): void;
+  setLoading(loading: boolean): void;
 }
 
 const QueryFormHooks = (props: Props) => {
@@ -26,6 +28,11 @@ const QueryFormHooks = (props: Props) => {
 
   const handleSubmit = () => {
     queryEmployee({ name, departmentId });
+  };
+
+  const handleReset = () => {
+    setName("");
+    setDepartmentId(undefined);
   };
 
   const queryEmployee = (param: EmployeeRequest) => {
@@ -67,6 +74,9 @@ const QueryFormHooks = (props: Props) => {
           <Button type="primary" onClick={handleSubmit}>
             検索
           </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={handleReset}>クリア</Button>
         </Form.Item>
       </Form>
     </>
