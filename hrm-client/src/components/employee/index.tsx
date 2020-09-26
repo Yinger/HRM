@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
 import "./index.scss";
-import { DownloadOutlined, PlusOutlined } from "@ant-design/icons";
+// import { DownloadOutlined, PlusOutlined } from "@ant-design/icons";
 
 import QueryForm from "./QueryForm";
 import InfoModal from "./InfoModal";
@@ -32,7 +32,7 @@ interface Props {
   onCreateEmployee(param: CreateRequest, callback: () => void): void;
   onDeleteEmployee(param: DeleteRequest): void;
   onUpdateEmployee(param: UpdateRequest, callback: () => void): void;
-  // employeeList: EmployeeResponse;
+  employeeList: EmployeeResponse;
 }
 
 const Employee = (props: Props) => {
