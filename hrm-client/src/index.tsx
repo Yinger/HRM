@@ -5,8 +5,10 @@ import Root from "./routers";
 import store from "./redux/store";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Root />
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("app")
 );

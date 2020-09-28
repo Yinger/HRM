@@ -10,6 +10,14 @@ import {
 } from "../../interface/employee";
 
 const { Option } = Select;
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
 
 interface Props extends FormProps {
   visible: boolean;
@@ -21,22 +29,21 @@ interface Props extends FormProps {
 }
 
 const WrapInfoModal = (
-  props: Props,
-  visible: boolean,
-  onCreate: React.MouseEvent<HTMLElement, MouseEvent> | undefined,
-  onCancel: React.MouseEvent<HTMLElement, MouseEvent> | undefined
+  props: Props
+  // visible: boolean,
+  // onCreate: React.MouseEvent<HTMLElement, MouseEvent> | undefined,
+  // onCancel: React.MouseEvent<HTMLElement, MouseEvent> | undefined
 ) => {
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const handleOk = () => {
     form.validateFields().then(() => {
+      // form.resetFields();
       setConfirmLoading(true);
-
       let param = form.getFieldsValue();
       console.log(param);
       param.hiredate = moment(param.hiredate, "YYYY-MM-DD");
-
       if (!props.edit) {
         props.createData(param as CreateRequest, close);
       } else {
@@ -67,8 +74,9 @@ const WrapInfoModal = (
       confirmLoading={confirmLoading}
       destroyOnClose={true}
     >
-      <Form form={form}>
+      <Form form={form} {...layout}>
         <Form.Item
+          label="氏名"
           name="name"
           initialValue={name}
           rules={[
@@ -87,6 +95,7 @@ const WrapInfoModal = (
           />
         </Form.Item>
         <Form.Item
+          label="所属課"
           name="departmentId"
           initialValue={departmentId}
           rules={[{ required: true, message: "所属課を選択してください" }]}
@@ -99,6 +108,7 @@ const WrapInfoModal = (
           </Select>
         </Form.Item>
         <Form.Item
+          label="入社時間"
           name="hiredate"
           initialValue={hiredate ? moment(hiredate) : undefined}
           rules={[{ required: true, message: "入社時間を選択してください" }]}
@@ -106,6 +116,7 @@ const WrapInfoModal = (
           <DatePicker placeholder="入社時間" style={{ width: 200 }} />
         </Form.Item>
         <Form.Item
+          label="level"
           name="levelId"
           initialValue={levelId}
           rules={[{ required: true, message: "levelを選択してください" }]}
