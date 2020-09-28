@@ -29,7 +29,7 @@ const WrapInfoModal = (props: Props) => {
       setConfirmLoading(true);
 
       let param = form.getFieldsValue();
-      param.hiredate = param.hiredate.format("YYYY-MM-DD");
+      param.hiredate = moment(param.hiredate, "YYYY-MM-DD");
 
       if (!props.edit) {
         props.createData(param as CreateRequest, close);

@@ -35,7 +35,7 @@ const getColunms = (
         <span>
           <Button
             size="small"
-            icon="edit"
+            // icon="edit"
             onClick={() => {
               handleUpdate(record);
             }}
@@ -49,7 +49,11 @@ const getColunms = (
               handleDelete({ id: record.id });
             }}
           >
-            <Button size="small" icon="delete" danger>
+            <Button
+              size="small"
+              // icon="delete"
+              danger
+            >
               削除
             </Button>
           </Popconfirm>
