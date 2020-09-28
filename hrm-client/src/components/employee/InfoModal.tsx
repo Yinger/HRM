@@ -8,7 +8,6 @@ import {
   CreateRequest,
   UpdateRequest,
 } from "../../interface/employee";
-import { Store } from "antd/lib/form/interface";
 
 const { Option } = Select;
 
@@ -58,18 +57,12 @@ const WrapInfoModal = (
 
   let title = props.edit ? "編集" : "新しい社員を作成";
   let { name, departmentId, hiredate, levelId } = props.rowData;
-  // console.log(props.rowData);
 
   return (
     <Modal
       title={title}
       visible={props.visible}
       onOk={handleOk}
-      // onOk={() => {
-      //   form.validateFields().then((values: Store) => {
-      //     console.log(values);
-      //   });
-      // }}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       destroyOnClose={true}
