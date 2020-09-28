@@ -5,4 +5,11 @@ export const department = [
   "HRソリューション",
   "総務部",
 ];
-export const level = ["level", "1", "2", "3", "4", "5"];
+export const level = [
+  "level",
+  "level-1",
+  "level-2",
+  "level-3",
+  "level-4",
+  "level-5",
+];

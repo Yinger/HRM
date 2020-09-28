@@ -8,6 +8,7 @@ import {
   CreateRequest,
   UpdateRequest,
 } from "../../interface/employee";
+import { Store } from "antd/lib/form/interface";
 
 const { Option } = Select;
 
@@ -20,7 +21,12 @@ interface Props extends FormProps {
   updateData(param: UpdateRequest, callback: () => void): void;
 }
 
-const WrapInfoModal = (props: Props) => {
+const WrapInfoModal = (
+  props: Props,
+  visible: boolean,
+  onCreate: React.MouseEvent<HTMLElement, MouseEvent> | undefined,
+  onCancel: React.MouseEvent<HTMLElement, MouseEvent> | undefined
+) => {
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -29,6 +35,7 @@ const WrapInfoModal = (props: Props) => {
       setConfirmLoading(true);
 
       let param = form.getFieldsValue();
+      console.log(param);
       param.hiredate = moment(param.hiredate, "YYYY-MM-DD");
 
       if (!props.edit) {
@@ -58,11 +65,16 @@ const WrapInfoModal = (props: Props) => {
       title={title}
       visible={props.visible}
       onOk={handleOk}
+      // onOk={() => {
+      //   form.validateFields().then((values: Store) => {
+      //     console.log(values);
+      //   });
+      // }}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       destroyOnClose={true}
     >
-      <Form>
+      <Form form={form}>
         <Form.Item
           name="name"
           initialValue={name}

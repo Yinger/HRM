@@ -54,6 +54,7 @@ export function getEmployee(param: EmployeeRequest, callback: () => void) {
 
 export function createEmployee(param: CreateRequest, callback: () => void) {
   return (dispatch: Dispatch) => {
+    // console.log(param.departmentId);
     post(CREATE_EMPLOYEE_URL, param).then((res) => {
       dispatch({
         type: CREATE_EMPLOYEE,

@@ -33,6 +33,7 @@ export function get(url: string, data: any) {
 
 // By default, axios serializes JavaScript objects to JSON.
 export function post(url: string, data: any) {
+  // console.log(data);
   return axios({
     method: "post",
     url,
