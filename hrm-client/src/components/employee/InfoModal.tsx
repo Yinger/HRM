@@ -51,6 +51,7 @@ const WrapInfoModal = (props: Props) => {
 
   let title = props.edit ? "編集" : "新しい社員を作成";
   let { name, departmentId, hiredate, levelId } = props.rowData;
+  // console.log(props.rowData);
 
   return (
     <Modal
@@ -105,11 +106,11 @@ const WrapInfoModal = (props: Props) => {
           rules={[{ required: true, message: "levelを選択してください" }]}
         >
           <Select placeholder="level" style={{ width: 200 }} allowClear>
-            <Option value={1}>1</Option>
-            <Option value={2}>2</Option>
-            <Option value={3}>3</Option>
-            <Option value={4}>4</Option>
-            <Option value={5}>5</Option>
+            <Option value={1}>level-1</Option>
+            <Option value={2}>level-2</Option>
+            <Option value={3}>level-3</Option>
+            <Option value={4}>level-4</Option>
+            <Option value={5}>level-5</Option>
           </Select>
         </Form.Item>
       </Form>

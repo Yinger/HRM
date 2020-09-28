@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Link } from "react-router-dom";
 import { Layout, Menu, ConfigProvider } from "antd";
 import ja_JP from "antd/lib/locale-provider/ja_JP";
+import "moment/locale/ja";
 
 import Employee from "./employee";
 import Setting from "./setting";

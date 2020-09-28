@@ -6,16 +6,20 @@
       "key": 1,
       "name": "地域一郎",
       "department": "技術部",
-      "hiredate": "2019-07-01",
-      "level": 1
+      "departmentId": 1,
+      "level": "level-1",
+      "levelId": 1,
+      "hiredate": "2019-07-01"
     },
     {
       "id": 2,
       "key": 2,
       "name": "地域三郎",
       "department": "サポート事業部",
-      "hiredate": "2017-07-01",
-      "level": 2
+      "departmentId": 2,
+      "level": "level-2",
+      "levelId": 2,
+      "hiredate": "2017-07-01"
     }
   ],
   "msg": "Error"
