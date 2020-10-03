@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
 import { FormProps } from "antd/lib/form";
 
@@ -41,9 +41,9 @@ const QueryFormHooks = (props: Props) => {
     });
   };
 
-  // useEffect(() => {
-  //   queryEmployee({ name, departmentId });
-  // });
+  useEffect(() => {
+    queryEmployee({ name, departmentId });
+  });
 
   return (
     <>
