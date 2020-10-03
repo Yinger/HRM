@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Input, Select } from "antd";
+import { FormProps } from "antd/lib/form";
+import { EmployeeRequest, EmployeeResponse } from "../../../interface/employee";
+import { get } from "../../../utils/request";
+import { GET_EMPLOYEE_URL } from "../../../constants/urls";
 
 const { Option } = Select;
-const QueryForm = () => {
+interface Props extends FormProps {
+  onDataChange(data: EmployeeResponse): void;
+  // getData(param: EmployeeRequest, callback: () => void): void;
+}
+
+const QueryForm = (props: Props) => {
   const [name] = useState("");
   const [departmentId] = useState<number | undefined>();
+
+  const queryEmployee = (param: EmployeeRequest) => {
+    get(GET_EMPLOYEE_URL, param).then((res) => {
+      props.onDataChange(res.data);
+    });
+  };
+
+  useEffect(() => {
+    queryEmployee({ name, departmentId });
+  }, []);
 
   return (
     <Form layout="inline">

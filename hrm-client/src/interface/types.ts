@@ -1,10 +1,10 @@
 import { EmployeeResponse } from "./employee";
 
-export type TypeAction = {
+export type Action = {
   type: string;
   payload: any;
 };
 
-export type TypeState = Readonly<{
+export type State = Readonly<{
   employeeList: EmployeeResponse;
 }>;

@@ -1,13 +1,13 @@
 import { reducer as getEmployeeReducer } from "./getEmployee";
-import { TypeState, TypeAction } from "../../../interface/types";
+import { State, Action } from "../../../interface/types";
 
-const initialState: TypeState = {
+const initialState: State = {
   employeeList: undefined,
 };
 
 const reducers = [getEmployeeReducer];
 
-export default function reducer(state = initialState, action: TypeAction) {
+export default function reducer(state = initialState, action: Action) {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here
