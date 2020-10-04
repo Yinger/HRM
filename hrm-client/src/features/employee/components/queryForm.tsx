@@ -8,17 +8,29 @@ import { GET_EMPLOYEE_URL } from "../../../constants/urls";
 const { Option } = Select;
 interface Props extends FormProps {
   onDataChange(data: EmployeeResponse): void;
-  // getData(param: EmployeeRequest, callback: () => void): void;
+  getData(param: EmployeeRequest, callback: () => void): void;
 }
 
 const QueryForm = (props: Props) => {
-  const [name] = useState("");
-  const [departmentId] = useState<number | undefined>();
+  const [name, setName] = useState("");
+  const [departmentId, setDepartmentId] = useState<number | undefined>();
+
+  const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+  };
+
+  const handleDepartmentChange = (value: number) => {
+    setDepartmentId(value);
+  };
 
   const queryEmployee = (param: EmployeeRequest) => {
     get(GET_EMPLOYEE_URL, param).then((res) => {
       props.onDataChange(res.data);
     });
+  };
+
+  const handleSubmit = () => {
+    queryEmployee({ name, departmentId });
   };
 
   useEffect(() => {
@@ -28,7 +40,12 @@ const QueryForm = (props: Props) => {
   return (
     <Form layout="inline">
       <Form.Item>
-        <Input placeholder="氏名" style={{ width: 200 }} value={name} />
+        <Input
+          placeholder="氏名"
+          style={{ width: 200 }}
+          value={name}
+          onChange={handleNameChange}
+        />
       </Form.Item>
       <Form.Item>
         <Select
@@ -36,6 +53,7 @@ const QueryForm = (props: Props) => {
           style={{ width: 200 }}
           allowClear
           value={departmentId}
+          onChange={handleDepartmentChange}
         >
           <Option value={1}>技術部</Option>
           <Option value={2}>サポート事業部</Option>
@@ -43,7 +61,9 @@ const QueryForm = (props: Props) => {
         </Select>
       </Form.Item>
       <Form.Item>
-        <Button type="primary">検索</Button>
+        <Button type="primary" onClick={handleSubmit}>
+          検索
+        </Button>
       </Form.Item>
       <Form.Item>
         <Button>クリア</Button>

@@ -17,10 +17,7 @@ const Employee = (props: Props) => {
   const [employeeList, setEmployeeList] = useState<EmployeeResponse>(undefined);
   return (
     <>
-      <QueryForm
-        onDataChange={setEmployeeList}
-        // getData={props.onGetEmployee}
-      />
+      <QueryForm onDataChange={setEmployeeList} getData={props.onGetEmployee} />
       <div className="toolbar">
         <Button type="primary">新規</Button>
         <Button type="primary" className="right">
