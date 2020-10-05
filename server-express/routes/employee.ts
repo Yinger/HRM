@@ -1,11 +1,56 @@
 import express from "express";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
+import Department from "../models/Department";
+import Level from "../models/Level";
+import Employee from "../models/Employee";
+import { resolve } from "bluebird";
 
 const router = express.Router();
 // const urlencodeParser = bodyParser.urlencoded({ extended: false });
 
 /* GET users listing. */
+router.get("/getDepartment", function (req, res) {
+  Department.findAll<Department>({})
+    .then((departments: Array<Department>) => {
+      resolve(
+        res.json({
+          flag: 0,
+          data: departments,
+          msg: "OK",
+        })
+      );
+    })
+    .catch((err: Error) => {
+      res.json({
+        flag: 1,
+        data: [],
+        msg: err.message,
+      });
+    });
+});
+router.get("/getLevel", function (req, res) {
+  Level.findAll<Level>({})
+    .then((levels: Array<Level>) => {
+      resolve(
+        res.json({
+          flag: 0,
+          data: levels,
+          msg: "OK",
+        })
+      );
+    })
+    .catch((err: Error) => {
+      res.json({
+        flag: 1,
+        data: [],
+        msg: err.message,
+      });
+    });
+});
 router.get("/getEmployee", function (req, res) {
+  Employee.findAll<Employee>({}).then((employees: Array<Employee>) => {
+    //todo
+  });
   res.json({
     flag: 0,
     data: [

@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import dbConfig from "../config/db";
 
-export class Level extends Model {
+export default class Level extends Model {
   public id!: number;
   public level!: string;
 }
@@ -9,7 +9,7 @@ export class Level extends Model {
 Level.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -21,6 +21,7 @@ Level.init(
     // underscored: true,
     tableName: "level",
     sequelize: dbConfig, // this bit is important
+    timestamps: false,
   }
 );
 

@@ -1,9 +1,9 @@
 import { Model, DataTypes } from "sequelize";
 import dbConfig from "../config/db";
-import { Department } from "./Department";
-import { Level } from "./Level";
+import Department from "./Department";
+import Level from "./Level";
 
-export class Employee extends Model {
+export default class Employee extends Model {
   public id!: number;
   public name!: string;
   public departmentId!: number;
@@ -14,7 +14,7 @@ export class Employee extends Model {
 Employee.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -25,11 +25,11 @@ Employee.init(
       type: DataTypes.DATE,
     },
     departmentId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     levelId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -37,18 +37,19 @@ Employee.init(
     // underscored: true,
     tableName: "employee",
     sequelize: dbConfig, // this bit is important
+    timestamps: false,
   }
 );
 
-Employee.hasOne(Department, {
-  sourceKey: "departmentId",
-  foreignKey: "id",
-});
+// Employee.hasMany(Department, {
+//   sourceKey: "departmentId",
+//   foreignKey: "id",
+// });
 
-Employee.hasOne(Level, {
-  sourceKey: "levelId",
-  foreignKey: "id",
-});
+// Employee.hasMany(Level, {
+//   sourceKey: "levelId",
+//   foreignKey: "id",
+// });
 
 Employee.sync({ force: true }).then(() =>
   console.log("employee table created")
