@@ -26,5 +26,17 @@ Department.init(
 );
 
 Department.sync({ force: true }).then(() => {
+  Department.create({
+    id: 1,
+    department: "開発",
+  });
+  Department.create({
+    id: 2,
+    department: "運用",
+  });
+  Department.create({
+    id: 3,
+    department: "テスト",
+  });
   console.log("department table created");
 });

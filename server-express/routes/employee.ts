@@ -10,8 +10,11 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get("/getDepartment", function (req, res) {
-  Department.findAll<Department>({})
+  Department.findAll<Department>({
+    // attributes: ["id", "department"],
+  })
     .then((departments: Array<Department>) => {
+      console.log(departments);
       resolve(
         res.json({
           flag: 0,

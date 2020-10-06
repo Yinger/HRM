@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import dbConfig from "../config/db";
-import Department from "./Department";
-import Level from "./Level";
+// import Department from "./Department";
+// import Level from "./Level";
 
 export default class Employee extends Model {
   public id!: number;

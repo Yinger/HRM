@@ -3,7 +3,8 @@ import { Button, Form, Input, Select } from "antd";
 import { FormProps } from "antd/lib/form";
 import { EmployeeRequest, EmployeeResponse } from "../../../interface/employee";
 import { get } from "../../../utils/request";
-import { GET_EMPLOYEE_URL } from "../../../constants/urls";
+import { GET_EMPLOYEE_URL, GET_DEPARTMENT_URL } from "../../../constants/urls";
+import { Department } from "../../../interface/department";
 
 const { Option } = Select;
 interface Props extends FormProps {
@@ -14,6 +15,7 @@ interface Props extends FormProps {
 const QueryForm = (props: Props) => {
   const [name, setName] = useState("");
   const [departmentId, setDepartmentId] = useState<number | undefined>();
+  const [departmentList, setDepartmentList] = useState<[]>();
 
   const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
@@ -29,12 +31,19 @@ const QueryForm = (props: Props) => {
     });
   };
 
+  const setDepartmentSelectOptions = (param: any) => {
+    get(GET_DEPARTMENT_URL, param).then((res) => {
+      setDepartmentList(res.data);
+    });
+  };
+
   const handleSubmit = () => {
     queryEmployee({ name, departmentId });
   };
 
   useEffect(() => {
     queryEmployee({ name, departmentId });
+    setDepartmentSelectOptions({});
   }, []);
 
   return (
@@ -55,9 +64,13 @@ const QueryForm = (props: Props) => {
           value={departmentId}
           onChange={handleDepartmentChange}
         >
-          <Option value={1}>技術部</Option>
-          <Option value={2}>サポート事業部</Option>
-          <Option value={3}>HRソリューション</Option>
+          {departmentList !== undefined
+            ? departmentList!.map((dep: Department) => (
+                <Option key={dep.id} value={dep.id}>
+                  {dep.department}
+                </Option>
+              ))
+            : ""}
         </Select>
       </Form.Item>
       <Form.Item>
