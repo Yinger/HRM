@@ -33,8 +33,14 @@ const QueryForm = (props: Props) => {
 
   const setDepartmentSelectOptions = (param: any) => {
     get(GET_DEPARTMENT_URL, param).then((res) => {
+      // console.log(res.data);
       setDepartmentList(res.data);
     });
+  };
+
+  const handleReset = () => {
+    setName("");
+    setDepartmentId(undefined);
   };
 
   const handleSubmit = () => {
@@ -65,7 +71,7 @@ const QueryForm = (props: Props) => {
           onChange={handleDepartmentChange}
         >
           {departmentList !== undefined
-            ? departmentList!.map((dep: Department) => (
+            ? departmentList.map((dep: Department) => (
                 <Option key={dep.id} value={dep.id}>
                   {dep.department}
                 </Option>
@@ -79,7 +85,7 @@ const QueryForm = (props: Props) => {
         </Button>
       </Form.Item>
       <Form.Item>
-        <Button>クリア</Button>
+        <Button onClick={handleReset}>クリア</Button>
       </Form.Item>
     </Form>
   );

@@ -26,6 +26,10 @@ Department.init(
 );
 
 Department.sync({ force: true }).then(() => {
+  // Department.create({
+  //   id: 1,
+  //   department: "--- ",
+  // });
   Department.create({
     id: 1,
     department: "開発",
