@@ -18,6 +18,7 @@ export function getEmployee(param: EmployeeRequest, callback: () => void) {
 }
 
 export function reducer(state: State, action: Action) {
+  // console.log(state.employeeList);
   switch (action.type) {
     case GET_EMPLOYEE:
       return {

@@ -67,7 +67,7 @@ const InfoModal = (props: Props) => {
 
   const setDepartmentSelectOptions = (param: any) => {
     get(GET_DEPARTMENT_URL, param).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setDepartmentList(res.data);
     });
   };

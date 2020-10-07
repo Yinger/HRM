@@ -90,14 +90,16 @@ router.post("/createEmployee", urlencodedParser, async function (req, res) {
     hiredate: new Date(hiredate),
     departmentId: departmentId,
     levelId: levelId,
-  }).then((result) => {
+  }).then(async (result) => {
+    const employees = await dbConfig.query(queryAllSQL, {
+      // logging: console.log,
+      raw: true,
+      type: QueryTypes.SELECT,
+    });
     resolve(
       res.json({
         flag: 0,
-        data: {
-          key: result.id,
-          id: result.id,
-        },
+        data: employees,
         msg: "OK",
       })
     );
