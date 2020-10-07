@@ -61,5 +61,21 @@ Employee.sync({ force: true }).then(() => {
     departmentId: 1,
     levelId: 3,
   });
+
+  Employee.create({
+    id: 2,
+    name: "田中",
+    hiredate: new Date("2015/07/01"),
+    departmentId: 2,
+    levelId: 2,
+  });
+
+  Employee.create({
+    id: 3,
+    name: "森",
+    hiredate: new Date("2020/07/01"),
+    departmentId: 3,
+    levelId: 1,
+  });
   console.log("employee table created");
 });

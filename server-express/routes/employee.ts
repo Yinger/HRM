@@ -56,8 +56,14 @@ router.get("/getLevel", function (req, res) {
     });
 });
 router.get("/getEmployee", async function (req, res) {
-  var total = Employee.count();
-  const employees = await dbConfig.query(queryAllSQL, {
+  // var total = Employee.count();
+  let { name = "", departmentId } = req.query;
+  let conditions = `AND employee.name LIKE '%${name}%'`;
+  if (departmentId) {
+    conditions = conditions + ` AND employee.departmentId=${departmentId}`;
+  }
+  let sql = `${queryAllSQL} ${conditions} ORDER BY employee.id DESC`;
+  const employees = await dbConfig.query(sql, {
     // logging: console.log,
     raw: true,
     type: QueryTypes.SELECT,
@@ -69,7 +75,7 @@ router.get("/getEmployee", async function (req, res) {
       flag: 0,
       data: employees,
       msg: "OK",
-      total: total,
+      // total: total,
     })
   );
 });

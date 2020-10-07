@@ -27,7 +27,7 @@ const QueryForm = (props: Props) => {
 
   const queryEmployee = (param: EmployeeRequest) => {
     get(GET_EMPLOYEE_URL, param).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       props.onDataChange(res.data);
     });
   };
@@ -42,6 +42,7 @@ const QueryForm = (props: Props) => {
   const handleReset = () => {
     setName("");
     setDepartmentId(undefined);
+    queryEmployee({ name: "", departmentId: undefined } as EmployeeRequest);
   };
 
   const handleSubmit = () => {
