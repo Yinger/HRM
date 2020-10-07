@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Divider, Popconfirm } from "antd";
 import { EmployeeInfo } from "../../../interface/employee";
 
-const DataColumns = () => {
+const DataColumns = (handleUpdate: (record: EmployeeInfo) => void) => {
   return [
     {
       title: "氏名",
@@ -33,7 +33,7 @@ const DataColumns = () => {
             size="small"
             // icon="edit"
             onClick={() => {
-              // handleUpdate(record);
+              handleUpdate(record);
             }}
           >
             編集

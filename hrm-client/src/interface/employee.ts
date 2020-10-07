@@ -19,8 +19,10 @@ export type EmployeeResponse = EmployeeInfo[] | undefined;
 export interface CreateRequest {
   name: string;
   departmentId: number;
+  department: string;
   hiredate: string;
   levelId: number;
+  level: string;
 }
 export interface CreateResponse {
   id: number;
@@ -32,8 +34,10 @@ export interface UpdateRequest {
   id: number;
   name: string;
   departmentId: number;
+  department: string;
   hiredate: string;
   levelId: number;
+  level: string;
 }
 
 // deleteEmployee

@@ -10,6 +10,7 @@ const { Option } = Select;
 interface Props extends FormProps {
   onDataChange(data: EmployeeResponse): void;
   getData(param: EmployeeRequest, callback: () => void): void;
+  setLoading(loading: boolean): void;
 }
 
 const QueryForm = (props: Props) => {
@@ -35,6 +36,10 @@ const QueryForm = (props: Props) => {
   const setDepartmentSelectOptions = (param: any) => {
     get(GET_DEPARTMENT_URL, param).then((res) => {
       // console.log(res.data);
+      var departments = res.data as Department[];
+      var dep = departments.filter((item) => item.id === 1)[0].department;
+      console.log(dep);
+      // (res.data)!.filter((item) => (item["id"]) === param.departmentId);
       setDepartmentList(res.data);
     });
   };
