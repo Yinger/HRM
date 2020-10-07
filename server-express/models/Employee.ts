@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import dbConfig from "../config/db";
+// import moment from "moment";
 
 export default class Employee extends Model {
   public id!: number;
@@ -30,7 +31,10 @@ Employee.init(
       type: DataTypes.STRING(128),
     },
     hiredate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
+      // get: function () {
+      //   return moment.utc(this.getDataValue("hiredate")).format("YYYY/MM/DD");
+      // },
     },
     departmentId: {
       type: DataTypes.INTEGER,
