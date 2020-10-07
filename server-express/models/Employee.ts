@@ -1,7 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import dbConfig from "../config/db";
-// import Department from "./Department";
-// import Level from "./Level";
 
 export default class Employee extends Model {
   public id!: number;
@@ -10,6 +8,16 @@ export default class Employee extends Model {
   public hiredate!: Date;
   public levelId!: number;
 }
+
+// export interface EmployeeInterface {
+//   id: number;
+//   name: string;
+//   hiredate: string;
+//   department: string;
+//   departmentId: number;
+//   level: string;
+//   levelId: number;
+// }
 
 Employee.init(
   {
@@ -41,16 +49,13 @@ Employee.init(
   }
 );
 
-// Employee.hasMany(Department, {
-//   sourceKey: "departmentId",
-//   foreignKey: "id",
-// });
-
-// Employee.hasMany(Level, {
-//   sourceKey: "levelId",
-//   foreignKey: "id",
-// });
-
-Employee.sync({ force: true }).then(() =>
-  console.log("employee table created")
-);
+Employee.sync({ force: true }).then(() => {
+  Employee.create({
+    id: 1,
+    name: "地域三郎",
+    hiredate: new Date("2010/05/04"),
+    departmentId: 1,
+    levelId: 3,
+  });
+  console.log("employee table created");
+});

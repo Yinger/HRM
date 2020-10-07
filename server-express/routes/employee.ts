@@ -1,12 +1,17 @@
 import express from "express";
-// import bodyParser from "body-parser";
 import Department from "../models/Department";
 import Level from "../models/Level";
 import Employee from "../models/Employee";
 import { resolve } from "bluebird";
+import { QueryTypes } from "sequelize";
+import dbConfig from "../config/db";
 
 const router = express.Router();
-// const urlencodeParser = bodyParser.urlencoded({ extended: false });
+let queryAllSQL = `SELECT employee.*, level.level, department.department
+    FROM employee, level, department
+    WHERE
+        employee.levelId = level.id AND
+        employee.departmentId = department.id`;
 
 /* GET users listing. */
 router.get("/getDepartment", function (req, res) {
@@ -50,46 +55,23 @@ router.get("/getLevel", function (req, res) {
       });
     });
 });
-router.get("/getEmployee", function (req, res) {
-  Employee.findAll<Employee>({}).then((employees: Array<Employee>) => {
-    //todo
+router.get("/getEmployee", async function (req, res) {
+  var total = Employee.count();
+  const employees = await dbConfig.query(queryAllSQL, {
+    // logging: console.log,
+    raw: true,
+    type: QueryTypes.SELECT,
   });
-  res.json({
-    flag: 0,
-    data: [
-      {
-        id: 1,
-        key: 1,
-        name: "地域一郎",
-        department: "技術部",
-        departmentId: 1,
-        level: "level-3",
-        levelId: 3,
-        hiredate: "2019-07-01",
-      },
-      {
-        id: 2,
-        key: 2,
-        name: "地域三郎",
-        department: "サポート事業部",
-        departmentId: 2,
-        level: "level-2",
-        levelId: 2,
-        hiredate: "2017-07-01",
-      },
-      {
-        id: 3,
-        key: 3,
-        name: "Lin",
-        department: "技術部",
-        departmentId: 2,
-        level: "level-2",
-        levelId: 2,
-        hiredate: "2017-07-01",
-      },
-    ],
-    msg: "OK",
-  });
+  // console.log(JSON.stringify(employees));
+
+  resolve(
+    res.json({
+      flag: 0,
+      data: employees,
+      msg: "OK",
+      total: total,
+    })
+  );
 });
 
 export default router;

@@ -27,6 +27,7 @@ const QueryForm = (props: Props) => {
 
   const queryEmployee = (param: EmployeeRequest) => {
     get(GET_EMPLOYEE_URL, param).then((res) => {
+      console.log(res.data);
       props.onDataChange(res.data);
     });
   };
