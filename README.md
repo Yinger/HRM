@@ -27,3 +27,4 @@ $ npm start
 # View Copy
 
 ![page](HelloCopy.png)
+![page](HelloCopy2.png)
