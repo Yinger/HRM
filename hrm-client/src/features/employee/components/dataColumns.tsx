@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Divider, Popconfirm } from "antd";
-import { EmployeeInfo } from "../../../interface/employee";
+import { EmployeeInfo, DeleteRequest } from "../../../interface/employee";
 
-const DataColumns = (handleUpdate: (record: EmployeeInfo) => void) => {
+const DataColumns = (
+  handleUpdate: (record: EmployeeInfo) => void,
+  handleDelete: (record: DeleteRequest) => void
+) => {
   return [
     {
       title: "氏名",
@@ -42,7 +45,7 @@ const DataColumns = (handleUpdate: (record: EmployeeInfo) => void) => {
           <Popconfirm
             title={`${record.name} を削除しますか？`}
             onConfirm={() => {
-              // handleDelete({ id: record.id });
+              handleDelete({ id: record.id });
             }}
           >
             <Button

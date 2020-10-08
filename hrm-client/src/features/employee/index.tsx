@@ -12,19 +12,21 @@ import {
   EmployeeResponse,
   EmployeeRequest,
   CreateRequest,
-  // DeleteRequest,
   UpdateRequest,
+  DeleteRequest,
 } from "../../interface/employee";
 import {
   getEmployee,
   createEmployee,
   updateEmployee,
+  deleteEmployee,
 } from "../employee/redux/actions";
 
 interface Props {
   onGetEmployee(param: EmployeeRequest, callback: () => void): void;
   onCreateEmployee(param: CreateRequest, callback: () => void): void;
   onUpdateEmployee(param: UpdateRequest, callback: () => void): void;
+  onDeleteEmployee(param: DeleteRequest): void;
   employeeList: EmployeeResponse;
 }
 
@@ -52,6 +54,10 @@ const Employee = (props: Props) => {
     setRowData(record);
   };
 
+  const handleDelete = (param: DeleteRequest) => {
+    props.onDeleteEmployee(param);
+  };
+
   return (
     <>
       <QueryForm
@@ -76,7 +82,7 @@ const Employee = (props: Props) => {
         updateData={props.onUpdateEmployee}
       />
       <Table
-        columns={DataColumns(handleUpdate)}
+        columns={DataColumns(handleUpdate, handleDelete)}
         dataSource={props.employeeList}
         loading={loading}
         className="table"
@@ -95,6 +101,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       onGetEmployee: getEmployee,
       onCreateEmployee: createEmployee,
       onUpdateEmployee: updateEmployee,
+      onDeleteEmployee: deleteEmployee,
     },
     dispatch
   );

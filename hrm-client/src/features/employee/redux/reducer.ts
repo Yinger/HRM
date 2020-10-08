@@ -1,22 +1,18 @@
 import { reducer as getEmployeeReducer } from "./getEmployee";
 import { reducer as createEmployeeReducer } from "./createEmployee";
 import { reducer as updateEmployeeReducer } from "./updateEmployee";
+import { reducer as deleteEmployeeReducer } from "./deleteEmployee";
 import { State, Action } from "../../../interface/types";
 import {
   GET_EMPLOYEE,
   CREATE_EMPLOYEE,
   UPDATE_EMPLOYEE,
+  DELETE_EMPLOYEE,
 } from "../../../constants/actions";
 
 const initialState: State = {
   employeeList: undefined,
 };
-
-// const reducers = [
-//   getEmployeeReducer,
-//   createEmployeeReducer,
-//   updateEmployeeReducer,
-// ];
 
 export default function reducer(state = initialState, action: Action) {
   // console.log(state);
@@ -29,6 +25,8 @@ export default function reducer(state = initialState, action: Action) {
       return createEmployeeReducer(state, action);
     case UPDATE_EMPLOYEE:
       return updateEmployeeReducer(state, action);
+    case DELETE_EMPLOYEE:
+      return deleteEmployeeReducer(state, action);
     default:
       return { ...state };
     // newState = state;

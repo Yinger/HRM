@@ -1,11 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
+import { resolve } from "bluebird";
+import { QueryTypes, UpdateOptions, DestroyOptions } from "sequelize";
+import dbConfig from "../config/db";
 import Department from "../models/Department";
 import Level from "../models/Level";
 import Employee from "../models/Employee";
-import { resolve } from "bluebird";
-import { QueryTypes, UpdateOptions } from "sequelize";
-import dbConfig from "../config/db";
 
 const router = express.Router();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -18,9 +18,7 @@ let queryAllSQL = `SELECT employee.*, level.level, department.department
 
 /* GET users listing. */
 router.get("/getDepartment", function (req, res) {
-  Department.findAll<Department>({
-    // attributes: ["id", "department"],
-  })
+  Department.findAll<Department>({})
     .then((departments: Array<Department>) => {
       console.log(departments);
       resolve(
@@ -59,7 +57,6 @@ router.get("/getLevel", function (req, res) {
     });
 });
 router.get("/getEmployee", async function (req, res) {
-  // var total = Employee.count();
   let { name = "", departmentId } = req.query;
   let conditions = `AND employee.name LIKE '%${name}%'`;
   if (departmentId) {
@@ -67,11 +64,9 @@ router.get("/getEmployee", async function (req, res) {
   }
   let sql = `${queryAllSQL} ${conditions} ORDER BY employee.id DESC`;
   const employees = await dbConfig.query(sql, {
-    // logging: console.log,
     raw: true,
     type: QueryTypes.SELECT,
   });
-  // console.log(JSON.stringify(employees));
 
   resolve(
     res.json({
@@ -92,11 +87,6 @@ router.post("/createEmployee", urlencodedParser, async function (req, res) {
     departmentId: departmentId,
     levelId: levelId,
   }).then(async (result) => {
-    // const employees = await dbConfig.query(sql, {
-    //   // logging: console.log,
-    //   raw: true,
-    //   type: QueryTypes.SELECT,
-    // });
     resolve(
       res.json({
         flag: 0,
@@ -128,6 +118,26 @@ router.post("/updateEmployee", urlencodedParser, async function (req, res) {
       })
     );
   });
+});
+
+router.post("/deleteEmployee", async (req, res) => {
+  let { id } = req.body;
+  try {
+    const options: DestroyOptions = {
+      where: { id: id },
+      limit: 1,
+    };
+    Employee.destroy(options).then(() => {
+      res.json({
+        flag: 0,
+      });
+    });
+  } catch (e) {
+    res.json({
+      flag: 1,
+      msg: e.toString(),
+    });
+  }
 });
 
 export default router;
