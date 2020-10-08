@@ -3,8 +3,9 @@ import { Modal, Form, Input, Select, DatePicker } from "antd";
 import { FormProps } from "antd/lib/form";
 import moment from "moment";
 import { get } from "../../../utils/request";
-import { GET_DEPARTMENT_URL } from "../../../constants/urls";
+import { GET_DEPARTMENT_URL, GET_LEVEL_URL } from "../../../constants/urls";
 import { Department } from "../../../interface/department";
+import { Level } from "../../../interface/level";
 import {
   EmployeeInfo,
   CreateRequest,
@@ -34,19 +35,22 @@ const InfoModal = (props: Props) => {
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [departmentList, setDepartmentList] = useState<[]>();
-  // const [levelList, setLevelList] = useState<[]>();
+  const [levelList, setLevelList] = useState<[]>();
 
   const handleOk = () => {
     form.validateFields().then(() => {
-      // form.resetFields();
       setConfirmLoading(true);
       let param = form.getFieldsValue();
-      console.log(param);
-      param.hiredate = moment(param.hiredate, "YYYY-MM-DD");
-      var selected = (departmentList as Department[]).filter(
+      param.hiredate = moment(param.hiredate).format("YYYY-MM-DD");
+      var selectedDep = (departmentList as Department[]).filter(
         (item) => item.id === param.departmentId
       );
-      if (selected.length === 1) param.department = selected[0].department;
+      var selectedLevel = (levelList as Level[]).filter(
+        (item) => item.id === param.levelId
+      );
+      if (selectedDep.length === 1)
+        param.department = selectedDep[0].department;
+      if (selectedLevel.length === 1) param.level = selectedLevel[0].level;
       if (!props.edit) {
         props.createData(param as CreateRequest, close);
       } else {
@@ -67,13 +71,19 @@ const InfoModal = (props: Props) => {
 
   const setDepartmentSelectOptions = (param: any) => {
     get(GET_DEPARTMENT_URL, param).then((res) => {
-      // console.log(res.data);
       setDepartmentList(res.data);
+    });
+  };
+
+  const setLevelSelectOptions = (param: any) => {
+    get(GET_LEVEL_URL, param).then((res) => {
+      setLevelList(res.data);
     });
   };
 
   useEffect(() => {
     setDepartmentSelectOptions({});
+    setLevelSelectOptions({});
   }, []);
 
   let title = props.edit ? "編集" : "新しい社員を作成";
@@ -140,11 +150,13 @@ const InfoModal = (props: Props) => {
             rules={[{ required: true, message: "levelを選択してください" }]}
           >
             <Select placeholder="level" style={{ width: 200 }} allowClear>
-              <Option value={1}>level-1</Option>
-              <Option value={2}>level-2</Option>
-              <Option value={3}>level-3</Option>
-              <Option value={4}>level-4</Option>
-              <Option value={5}>level-5</Option>
+              {levelList !== undefined
+                ? levelList.map((dep: Level) => (
+                    <Option key={dep.id} value={dep.id}>
+                      {dep.level}
+                    </Option>
+                  ))
+                : ""}
             </Select>
           </Form.Item>
         </Form>

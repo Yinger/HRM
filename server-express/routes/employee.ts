@@ -85,21 +85,22 @@ router.get("/getEmployee", async function (req, res) {
 
 router.post("/createEmployee", urlencodedParser, async function (req, res) {
   let { name, departmentId, hiredate, levelId } = req.body;
+  let sql = `${queryAllSQL} ORDER BY employee.id DESC`;
   Employee.create({
     name: name,
     hiredate: new Date(hiredate),
     departmentId: departmentId,
     levelId: levelId,
   }).then(async (result) => {
-    const employees = await dbConfig.query(queryAllSQL, {
-      // logging: console.log,
-      raw: true,
-      type: QueryTypes.SELECT,
-    });
+    // const employees = await dbConfig.query(sql, {
+    //   // logging: console.log,
+    //   raw: true,
+    //   type: QueryTypes.SELECT,
+    // });
     resolve(
       res.json({
         flag: 0,
-        data: employees,
+        data: { key: result.id, id: result.id },
         msg: "OK",
       })
     );

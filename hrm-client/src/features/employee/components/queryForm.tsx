@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Input, Select } from "antd";
 import { FormProps } from "antd/lib/form";
-import { EmployeeRequest, EmployeeResponse } from "../../../interface/employee";
+import { EmployeeRequest } from "../../../interface/employee";
 import { get } from "../../../utils/request";
-import { GET_EMPLOYEE_URL, GET_DEPARTMENT_URL } from "../../../constants/urls";
+import { GET_DEPARTMENT_URL } from "../../../constants/urls";
 import { Department } from "../../../interface/department";
 
 const { Option } = Select;
@@ -31,10 +31,6 @@ const QueryForm = (props: Props) => {
     props.getData(param, () => {
       props.setLoading(false);
     });
-    // get(GET_EMPLOYEE_URL, param).then((res) => {
-    //   // console.log(res.data);
-    //   props.onDataChange(res.data);
-    // });
   };
 
   const setDepartmentSelectOptions = (param: any) => {
