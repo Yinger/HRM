@@ -1,6 +1,6 @@
 # HRM - employee management system(CRUD)
 
-The purpose of this project is to discover an implementation of an **APIRESTfull** + **Client** using TypeScript.
+The purpose of this project is to discover an implementation of an **API RESTfull** + **Client** using TypeScript.
 
 - API Server:express with sqliteDB
 - Client:React(Hooks) with Redux & AntD
