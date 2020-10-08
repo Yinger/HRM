@@ -141,12 +141,14 @@ const InfoModal = (props: Props) => {
             </Select>
           </Form.Item>
           <Form.Item
-            label="入社時間"
+            label="入社年月日"
             name="hiredate"
             initialValue={hiredate ? moment(hiredate) : undefined}
-            rules={[{ required: true, message: "入社時間を選択してください" }]}
+            rules={[
+              { required: true, message: "入社年月日を選択してください" },
+            ]}
           >
-            <DatePicker placeholder="入社時間" style={{ width: 200 }} />
+            <DatePicker placeholder="入社年月日" style={{ width: 200 }} />
           </Form.Item>
           <Form.Item
             label="level"
