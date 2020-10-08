@@ -29,7 +29,7 @@ interface Props {
 }
 
 const Employee = (props: Props) => {
-  const [employeeList, setEmployeeList] = useState<EmployeeResponse>(undefined);
+  // const [employee, setEmployee] = useState<EmployeeResponse>(undefined);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -52,10 +52,20 @@ const Employee = (props: Props) => {
     setRowData(record);
   };
 
+  // render(){
+  //   const {
+  //     employeeList,
+  //     onGetEmployee,
+  //     onCreateEmployee,
+  //     onUpdateEmployee
+  // } = props;
+  // return(<></>);
+  // }
+
   return (
     <>
       <QueryForm
-        onDataChange={setEmployeeList}
+        // onDataChange={setEmployee}
         setLoading={setLoading}
         getData={props.onGetEmployee}
       />
@@ -77,7 +87,7 @@ const Employee = (props: Props) => {
       />
       <Table
         columns={DataColumns(handleUpdate)}
-        dataSource={employeeList}
+        dataSource={props.employeeList}
         loading={loading}
         className="table"
       />
