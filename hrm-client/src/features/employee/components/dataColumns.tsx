@@ -18,7 +18,7 @@ const DataColumns = (
       key: "department",
     },
     {
-      title: "入社時間",
+      title: "入社日",
       dataIndex: "hiredate",
       key: "hiredate",
     },
