@@ -65,8 +65,10 @@ const InfoModal = (props: Props) => {
   };
 
   const close = () => {
+    // console.log(props.rowData);
     props.hide();
     setConfirmLoading(false);
+    // console.log(props.rowData);
   };
 
   const setDepartmentSelectOptions = (param: any) => {
@@ -88,21 +90,24 @@ const InfoModal = (props: Props) => {
 
   let title = props.edit ? "編集" : "新しい社員を作成";
   let { name, departmentId, hiredate, levelId } = props.rowData;
+  // console.log(props.rowData);
+  // console.log(name);
 
   return (
     <>
       <Modal
+        destroyOnClose={true}
         title={title}
         visible={props.visible}
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={confirmLoading}
-        destroyOnClose={true}
       >
-        <Form form={form} {...layout}>
+        <Form form={form} {...layout} preserve={false}>
           <Form.Item
             label="氏名"
             name="name"
+            // fieldKey={name}
             initialValue={name}
             rules={[
               {

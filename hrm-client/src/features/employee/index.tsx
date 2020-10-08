@@ -36,14 +36,14 @@ const Employee = (props: Props) => {
   const [rowData, setRowData] = useState<Partial<EmployeeInfo>>({});
 
   const hideModal = () => {
-    setShowModal(false);
     setRowData({});
+    setShowModal(false);
   };
 
   const handleCreate = () => {
+    setRowData({});
     setShowModal(true);
     setEdit(false);
-    setRowData({});
   };
 
   const handleUpdate = (record: EmployeeInfo) => {
@@ -51,16 +51,6 @@ const Employee = (props: Props) => {
     setEdit(true);
     setRowData(record);
   };
-
-  // render(){
-  //   const {
-  //     employeeList,
-  //     onGetEmployee,
-  //     onCreateEmployee,
-  //     onUpdateEmployee
-  // } = props;
-  // return(<></>);
-  // }
 
   return (
     <>
