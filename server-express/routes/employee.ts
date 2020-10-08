@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import excelExport from "excel-export";
 import { resolve } from "bluebird";
 import { QueryTypes, UpdateOptions, DestroyOptions } from "sequelize";
 import dbConfig from "../config/db";
@@ -80,7 +81,7 @@ router.get("/getEmployee", async function (req, res) {
 
 router.post("/createEmployee", urlencodedParser, async function (req, res) {
   let { name, departmentId, hiredate, levelId } = req.body;
-  let sql = `${queryAllSQL} ORDER BY employee.id DESC`;
+  // let sql = `${queryAllSQL} ORDER BY employee.id DESC`;
   Employee.create({
     name: name,
     hiredate: new Date(hiredate),
@@ -137,6 +138,36 @@ router.post("/deleteEmployee", async (req, res) => {
       flag: 1,
       msg: e.toString(),
     });
+  }
+});
+
+let conf: excelExport.Config = {
+  cols: [
+    { caption: "ID", type: "number" },
+    { caption: "氏名", type: "string" },
+    { caption: "所属課", type: "string" },
+    { caption: "入社年月日", type: "string" },
+    { caption: "Level", type: "string" },
+  ],
+  rows: [],
+};
+
+router.get("/downloadEmployee", async (req, res) => {
+  try {
+    let sql = `${queryAllSQL} ORDER BY employee.id DESC`;
+    let result = await dbConfig.query(sql, {
+      raw: true,
+      type: QueryTypes.SELECT,
+    });
+    conf.rows = result.map((i: any) => {
+      return [i.id, i.name, i.department, i.hiredate, i.level];
+    });
+    let excel = excelExport.execute(conf);
+    res.setHeader("Content-Type", "application/vnd.openxmlformats");
+    res.setHeader("Content-Disposition", "attachment; filename=Employee.xlsx");
+    res.end(excel, "binary");
+  } catch (e) {
+    res.send(e.toString());
   }
 });
 

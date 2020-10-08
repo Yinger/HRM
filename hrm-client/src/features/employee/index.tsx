@@ -6,6 +6,7 @@ import QueryForm from "./components/queryForm";
 import InfoModal from "./components/infoModal";
 import "./index.scss";
 import DataColumns from "./components/dataColumns";
+import { DOWNLOAD_EMPLOYEE_URL } from "../../constants/urls";
 
 import {
   EmployeeInfo,
@@ -58,6 +59,10 @@ const Employee = (props: Props) => {
     props.onDeleteEmployee(param);
   };
 
+  const handleDownload = () => {
+    window.open(DOWNLOAD_EMPLOYEE_URL);
+  };
+
   return (
     <>
       <QueryForm
@@ -69,7 +74,7 @@ const Employee = (props: Props) => {
         <Button type="primary" onClick={handleCreate}>
           新規
         </Button>
-        <Button type="primary" className="right">
+        <Button type="primary" onClick={handleDownload} className="right">
           Export
         </Button>
       </div>
