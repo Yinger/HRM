@@ -3,7 +3,7 @@
 The purpose of this project is to discover an implementation of an **APIRESTfull** + **Client** using TypeScript.
 
 - API Server:express with sqliteDB
-- Client:React(Hooks) with AntD
+- Client:React(Hooks) with Redux & AntD
 
 # Usage
 
