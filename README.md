@@ -7,7 +7,7 @@ The purpose of this project is to discover an implementation of an **APIRESTfull
 
 # Usage
 
-## Setup project (Server)
+## Setup Server
 
 ```
 $ cd server-express
@@ -16,7 +16,7 @@ $ npm run build
 $ npm start (npm run watch)
 ```
 
-## Setup project (Client)
+## Setup Client
 
 ```
 $ cd hrm-client
