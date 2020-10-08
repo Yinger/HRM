@@ -24,4 +24,6 @@ $ cd hrm-client
 $ npm start
 ```
 
+# View Copy
+
 ![page](HelloCopy.png)
